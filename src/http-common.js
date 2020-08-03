@@ -1,7 +1,7 @@
 import axios from "axios";
-
+console.log(process.env.API_URL);
 export default axios.create({
-    baseURL: "http://172.17.0.3:8082/api",
+    baseURL: "https://cembeliq.com:4433/api",
     headers: {
         "Content-type": "application/json"
     }
