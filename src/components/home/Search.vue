@@ -38,7 +38,7 @@
                 <i class="fa fa-user"></i>
               </a>
               <div class="text">
-                <span class="text-muted">Welcome! {{ currentUser.username }}</span>
+                <span class="text-muted">Selamat datang! {{ currentUser.username }}</span>
                 <div>
                   <!-- <a href="#">Sign in</a> |
                   <a href="#">Register</a> -->
@@ -70,7 +70,7 @@
                 <i class="fa fa-user"></i>
               </a>
               <div class="text">
-                <span class="text-muted">Welcome!</span>
+                <span class="text-muted">Selamat datang!</span>
                 <div>
                   <!-- <a href="#">Sign in</a> |
                   <a href="#">Register</a> -->

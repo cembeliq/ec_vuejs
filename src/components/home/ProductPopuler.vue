@@ -99,7 +99,8 @@ export default {
                       return `width: ${x}%`;
                     });
                     this.src = this.products.map(function(item){
-                      return `images/items/${item.image}`;
+                      console.log(`images/products/${item.image}`);
+                      return `images/products/${item.image}`;
                     });
                     this.slug = this.products.map(function(item){
                       let text = item.name;
