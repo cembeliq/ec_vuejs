@@ -5,36 +5,36 @@
       <section class="footer-top padding-y">
         <div class="row">
           <aside class="col-md col-6">
-            <h6 class="title">Brands</h6>
+            <h6 class="title">Brand</h6>
             <ul class="list-unstyled">
               <li>
-                <a href="#">Adidas</a>
+                <a href="#">Dell</a>
               </li>
               <li>
-                <a href="#">Puma</a>
+                <a href="#">Toshiba</a>
               </li>
               <li>
-                <a href="#">Reebok</a>
+                <a href="#">Lenovo</a>
               </li>
               <li>
-                <a href="#">Nike</a>
+                <a href="#">HP</a>
               </li>
             </ul>
           </aside>
           <aside class="col-md col-6">
-            <h6 class="title">Company</h6>
+            <h6 class="title">Perusahaan</h6>
             <ul class="list-unstyled">
               <li>
-                <a href="#">About us</a>
+                <a href="#">Tentang kami</a>
               </li>
               <li>
-                <a href="#">Career</a>
+                <a href="#">Karir</a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="#">Find a store</a>
-              </li>
+              </li> -->
               <li>
-                <a href="#">Rules and terms</a>
+                <a href="#">Syarat & Ketentuan</a>
               </li>
               <li>
                 <a href="#">Sitemap</a>
@@ -42,62 +42,62 @@
             </ul>
           </aside>
           <aside class="col-md col-6">
-            <h6 class="title">Help</h6>
+            <h6 class="title">Bantuan</h6>
             <ul class="list-unstyled">
               <li>
-                <a href="#">Contact us</a>
+                <a href="#">Hubungi kami</a>
               </li>
               <li>
-                <a href="#">Money refund</a>
+                <a href="#">Pengembalian Uang</a>
               </li>
               <li>
-                <a href="#">Order status</a>
+                <a href="#">Info pengiriman</a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="#">Shipping info</a>
               </li>
               <li>
                 <a href="#">Open dispute</a>
-              </li>
+              </li> -->
             </ul>
           </aside>
           <aside class="col-md col-6">
-            <h6 class="title">Account</h6>
+            <h6 class="title">Akun</h6>
             <ul class="list-unstyled">
-              <li>
-                <a href="#">User Login</a>
+              <!-- <li>
+                <a href="#">Login</a>
               </li>
               <li>
-                <a href="#">User register</a>
+                <a href="#">Register</a>
+              </li> -->
+              <li>
+                <a href="#">Pengaturan akun</a>
               </li>
               <li>
-                <a href="#">Account Setting</a>
-              </li>
-              <li>
-                <a href="#">My Orders</a>
+                <a href="#">Pesanan saya</a>
               </li>
             </ul>
           </aside>
           <aside class="col-md">
-            <h6 class="title">Social</h6>
+            <h6 class="title">Sosial</h6>
             <ul class="list-unstyled">
               <li>
-                <a href="#">
+                <a href="https://web.facebook.com/cembeliq">
                   <i class="fa fa-facebook"></i> Facebook
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://twitter.com/cembeliq">
                   <i class="fa fa-twitter"></i> Twitter
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://www.instagram.com/cembeliq.gadget">
                   <i class="fa fa-instagram"></i> Instagram
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="https://www.youtube.com/cembeliq">
                   <i class="fa fa-youtube"></i> Youtube
                 </a>
               </li>

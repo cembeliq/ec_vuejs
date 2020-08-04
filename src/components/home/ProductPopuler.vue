@@ -3,7 +3,8 @@
   <section class="section-content">
     <div class="container">
       <header class="section-heading">
-        <h3 class="section-title">Popular products</h3>
+        <!-- <h3 class="section-title">Popular products</h3> -->
+        <h3 class="section-title">Produk</h3>
       </header>
       <!-- sect-heading -->
 

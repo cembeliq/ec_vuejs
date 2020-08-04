@@ -8,10 +8,10 @@
     <Search />
     <Category />
     <Banner />
-    <Feature />
+    <!-- <Feature /> -->
     <ProductPopuler />
-    <ProductNew />
-    <ProductRecommended />
+    <!-- <ProductNew />
+    <ProductRecommended /> -->
     <Brand />
     <AppDownload />
     <Footer />
@@ -39,10 +39,10 @@ import Header from "./home/Header";
 import Category from "./home/Category.vue";
 import Search from "./home/Search.vue";
 import Banner from "./home/Banner.vue";
-import Feature from "./home/Feature.vue";
+// import Feature from "./home/Feature.vue";
 import ProductPopuler from "./home/ProductPopuler.vue";
-import ProductNew from "./home/ProductNew.vue";
-import ProductRecommended from "./home/ProductRecommended.vue";
+// import ProductNew from "./home/ProductNew.vue";
+// import ProductRecommended from "./home/ProductRecommended.vue";
 import Brand from "./home/Brand.vue";
 import AppDownload from "./home/AppDownload.vue";
 import Footer from "./home/Footer.vue";
@@ -55,10 +55,10 @@ export default {
     Search,
     Header,
     Banner,
-    Feature,
+    // Feature,
     ProductPopuler,
-    ProductNew,
-    ProductRecommended,
+    // ProductNew,
+    // ProductRecommended,
     Brand,
     AppDownload,
     Footer,
