@@ -99,8 +99,7 @@ export default {
                       return `width: ${x}%`;
                     });
                     this.src = this.products.map(function(item){
-                      console.log(process.env.VUE_APP_URL_API+item.images[0].name);
-                      return process.env.VUE_APP_URL_API+item.images[0].name;
+                      return process.env.VUE_APP_URL_API_IMAGE+item.images[0].name;
                     });
                     this.slug = this.products.map(function(item){
                       let text = item.name;
