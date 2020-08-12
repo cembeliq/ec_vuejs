@@ -46,7 +46,7 @@
                 </ul>
                 <span class="label-rating text-muted">34 reviws</span>
               </div>
-              <div class="price mt-1">$ {{ product.price }}</div>
+              <div class="price mt-1">{{ formatPrice(product.price) }}</div>
               <br>
               <!-- <div class="row">
               <div class="col-md-6">

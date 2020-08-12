@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col-lg-2 col-6">
           <a href="/" >
-            <img src="../../assets/logo.png" />
+            <img src="../../assets/logo.png" style="width:200px"/>
           </a>
           <!-- brand-wrap.// -->
         </div>

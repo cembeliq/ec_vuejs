@@ -63,7 +63,7 @@
           <!-- rating-wrap.// -->
 
           <div class="mb-3">
-            <var class="price h4">Rp{{ product.price }}</var>
+            <var class="price h4">{{ formatPrice(product.price) }}</var>
             <span class="text-muted"></span>
           </div>
           <!-- price-detail-wrap .// -->
@@ -71,7 +71,7 @@
           <!-- <p>{{ product.desc }}</p> -->
           
 
-          <dl class="row">
+          <!-- <dl class="row">
             <dt class="col-sm-3">Model#</dt>
             <dd class="col-sm-9">Odsy-1000</dd>
 
@@ -80,7 +80,7 @@
 
             <dt class="col-sm-3">Delivery</dt>
             <dd class="col-sm-9">Russia, USA, and Europe</dd>
-          </dl>
+          </dl> -->
 
           <hr />
           <div class="form-row">
@@ -180,16 +180,16 @@ export default {
             process.env.VUE_APP_PREFIX_SLUG +
             btoa(this.product.id);
           this.urlwa =
-            "https://api.whatsapp.com/send?phone=+628111070114&text=http://"+ window.location.host + "/" + slug;
+            "https://api.whatsapp.com/send?phone=+628111070114&text="+ process.env.VUE_APP_GREETING +" http://"+ window.location.host + "/" + slug;
           this.urlshopee = "https://shopee.co.id/cembeliq86/" + slug;
 
           $('#desc').html(this.product.desc);
-          this.mainImage = `images/items/${this.product.image}`;
+          this.mainImage = `${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}`;
           this.src = this.product.images.map(function(item){
-            return `images/items/${item.name}`;
+            return `${process.env.VUE_APP_URL_API_IMAGE}${item.name}`;
           });
 
-          let content = `<a href=images/items/${this.product.image}><img src=images/items/${this.product.image} /></a>`;
+          let content = `<a href=${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}><img src=${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name} /></a>`;
           // alert(content);
           $('#main_image_id').html(content);
 
