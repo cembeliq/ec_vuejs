@@ -15,7 +15,7 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="#" class="nav-link">Call: 08111070114</a>
+            <a href="#" onclick="window.open('tel:08111070114');" class="nav-link">Call: 08111070114</a>
           </li>
           <!-- <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">English</a>

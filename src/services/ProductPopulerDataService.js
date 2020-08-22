@@ -1,12 +1,12 @@
 import http from "../http-common";
 
 class ProductDataService{
-    getAll(){
-        return http.get("/product");
+    getAll(name){
+        return http.get(`/product/${name}`);
     }
 
     get(id){
-        return http.get(`/product/${id}`);
+        return http.get(`/product/detail/${id}`);
     }
 
     create(data){

@@ -18,9 +18,11 @@
           
           <li class="nav-item"  :class="{active:index == currentIndex}"
                     v-for="(category, index) in categories"
-                    :key="index"
+                    :key="category.id"
                     @click="setActiveCategory(category, index)"  
-                ><a class="nav-link" :href="'/categories/' + category.slug" >{{ category.name }}</a>
+                >
+                <a class="nav-link" :href=slug[index]>{{category.name}}</a>
+                <!-- <router-link :to="{ name: 'categories_name', params: { categoryName: slug[index]} }" ><a class="nav-link"> {{category.name }}</a></router-link> -->
           </li>
           
         </ul>
@@ -28,11 +30,12 @@
       <!-- collapse .// -->
     </div>
     <!-- container .// -->
+    
   </nav>
 </template>
 
 <script>
-import CategoryDataService from "../../services/CategoryDataService";
+import CategoryDataService from "../services/CategoryDataService";
 
 export default {
     name: "category",
@@ -40,7 +43,8 @@ export default {
         return{
             categories: [],
             currentCategory: null,
-            currentIndex: -1
+            currentIndex: -1,
+            slug: ""
         }
         
     },
@@ -49,6 +53,9 @@ export default {
             CategoryDataService.getAll()
                 .then(response => {
                     this.categories = response.data;
+                    this.slug = this.categories.map(function(item){
+                      return "/category/"+item.slug;
+                    })
                 })
                 .catch(err => {
                     console.log(err);

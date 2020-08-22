@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import ProductPopulerDataService from "../../services/ProductPopulerDataService";
+import ProductPopulerDataService from "../services/ProductPopulerDataService";
 
 export default {
     name: "populer-product",
@@ -90,8 +90,36 @@ export default {
     },
     methods: {
         retrieveProduct() {
-            ProductPopulerDataService.getAll()
+            // console.log("category name:"+this.$route.params.categoryName);
+            // if (this.$route.params.categoryName == 'undefined') {
+            //   console.log("undefined");
+            //   ProductPopulerDataService.getAll()
+            //     .then(res => {
+            //         this.products = res.data;
+            //         this.width = this.products.map(function(item){
+            //           let x = item.rating/5*100;
+                      
+            //           return `width: ${x}%`;
+            //         });
+            //         this.src = this.products.map(function(item){
+            //           return process.env.VUE_APP_URL_API_IMAGE+item.images[0].name;
+            //         });
+            //         this.slug = this.products.map(function(item){
+            //           let text = item.name;
+            //           return text.replace(/ /g, "-").toLowerCase()+process.env.VUE_APP_PREFIX_SLUG+btoa(item.id);
+            //         });
+            //         this.urlwa = "https://api.whatsapp.com/send?phone=+628111070114&text=";
+            //         this.urlshopee = "https://shopee.co.id/cembeliq86/";
+            //     })
+            //     .catch(err => {
+            //         console.log(err)
+            //     })
+            // } else{
+            //   console.log("defined");
+              // let name = this.$route.params.categoryName ? this.$route.params.categoryName : 'undefined';
+              ProductPopulerDataService.getAll(this.$route.params.categoryName)
                 .then(res => {
+                  console.log(res.data);
                     this.products = res.data;
                     this.width = this.products.map(function(item){
                       let x = item.rating/5*100;
@@ -111,6 +139,8 @@ export default {
                 .catch(err => {
                     console.log(err)
                 })
+            // }
+            
         }
     },
     mounted() {

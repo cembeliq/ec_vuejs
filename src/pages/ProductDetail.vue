@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <div class="panel-body">
-      <component :is="layout">
-        <router-view />
-      </component>
-    </div>
+    
+    <ProductDetail />
+    <ProductDetailTab />
+
+  
   </div>
 </template>
 
 <script>
-const default_layout = "default";
+
+import ProductDetail from "../components/ProductDetail.vue";
+import ProductDetailTab from "../components/ProductDetailTab.vue";
 
 export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || default_layout) + '-layout';
-    }
+  name: "app",
+  components: {
+    ProductDetail,
+    ProductDetailTab
   }
 };
 </script>

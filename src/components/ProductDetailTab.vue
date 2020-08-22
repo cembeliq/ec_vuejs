@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import ProductDataService from "../../services/ProductPopulerDataService";
+import ProductDataService from "../services/ProductPopulerDataService";
 
 export default {
   name: "detail-product",

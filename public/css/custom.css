@@ -1,0 +1,10 @@
+.row-search{
+    margin-bottom: -50px;
+    margin-top: -50px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }

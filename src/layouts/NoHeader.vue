@@ -1,21 +1,28 @@
 <template>
   <div id="app">
-    <div class="panel-body">
-      <component :is="layout">
-        <router-view />
-      </component>
+    
+      <Header />
+      <div class="product">
+      <router-view />
     </div>
-  </div>
+    </div >
+  
 </template>
 
 <script>
-const default_layout = "default";
+import Header from "../components/Header";
 
 export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || default_layout) + '-layout';
-    }
+  name: "app",
+  components: {
+    
+    Header,
+    // Banner,
+    // Feature,
+    // ProductPopuler,
+    // ProductNew,
+    // ProductRecommended,
+    
   }
 };
 </script>

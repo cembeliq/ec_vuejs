@@ -4,16 +4,16 @@
       <div class="row align-items-center">
         <div class="col-lg-2 col-6">
           <a href="/" >
-            <img src="../../assets/logo.png" style="width:200px"/>
+            <img src="../assets/logo.png" style="width:150px"/>
           </a>
           <!-- brand-wrap.// -->
         </div>
         <div class="col-lg-6 col-12 col-sm-12">
-          <form action="#" class="search">
+          <form @keyup.enter="onSearch($event)" class="search">
             <div class="input-group w-100">
-              <input type="text" class="form-control" placeholder="Search" />
+              <input type="text" class="form-control" name="search" v-model=search :placeholder=search />
               <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">
+                <button class="btn btn-primary" @click="onSearch">
                   <i class="fa fa-search"></i>
                 </button>
               </div>
@@ -102,7 +102,14 @@
 </template>
 
 <script>
+// import ProductPopulerDataService from "../services/ProductPopulerDataService";
+
 export default {
+  data(){
+    return{
+      search: "",
+    }
+  },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
@@ -126,6 +133,10 @@ export default {
     logOut() {
       this.$store.dispatch('auth/logout');
       this.$router.push('/');
+    },
+    onSearch(event){
+      event.preventDefault();
+      window.location = `/category/${this.search}`;
     }
   }
 };

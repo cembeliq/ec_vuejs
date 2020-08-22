@@ -10,7 +10,13 @@ export default new Router({
             path: "/",
             alias: "/",
             name: "home",
-            component: () => import("./components/Home")
+            component: require("./pages/Home").default
+        },
+        {
+            path: "/about-us",
+            name: "about",
+            meta: {layout: "no-header"},
+            component: () => import("./pages/About")
         },
         {
             path: "/cart",
@@ -22,18 +28,25 @@ export default new Router({
             path: "/signin",
             alias: "/signin",
             name: "signin",
+            meta: {layout: "no-header"},
             component: () => import("./components/Signin")
         },
         {
             path: "/register",
             alias: "/register",
             name: "register",
+            meta: {layout: "no-header"},
             component: () => import("./components/Register")
+        },
+        {
+            path: "/category/:categoryName",
+            name: "categories_name",
+            component: () => import("./pages/Home")
         },
         {
             path: "/:id",
             name: "product_detail",
-            component: () => import("./components/ProductDetail")
+            component: () => import("./pages/ProductDetail")
         },
         
     ]
