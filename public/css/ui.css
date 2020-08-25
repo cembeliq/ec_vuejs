@@ -1020,8 +1020,8 @@ a[class*='card'] {
     text-align: center;
     display: block; }
   .gallery-wrap .img-big-wrap img {
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: 360px;
     display: inline-block;
     cursor: -webkit-zoom-in;
     cursor: zoom-in; }

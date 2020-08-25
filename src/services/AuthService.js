@@ -23,6 +23,8 @@ class AuthService{
             username: user.username,
             email: user.email,
             phone: user.phone,
+            address: user.address,
+            district_id: user.district_id,
             password: user.password
         });
     }

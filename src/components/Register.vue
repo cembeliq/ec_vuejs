@@ -54,6 +54,39 @@
               >{{errors.first('phone')}}</div>
             </div>
 
+            <div class="form-group">
+              <label>Alamat</label>  
+              <input
+                v-model="user.address"
+                v-validate="'required'"
+                type="text"
+                class="form-control"
+                name="address"
+              />
+              <div
+                v-if="submitted && errors.has('address')"
+                class="alert-danger"
+              >{{ errors.first('address')}}
+              </div>
+            </div>
+            <input type="hidden" v-model="user.district" class="form-control">
+            <div class="form-group">
+              <label>Kecamatan/kabupaten/provinsi</label>
+              <autocomplete
+                :search="search"
+                placeholder="Cari kecamatan/kabupaten/provinsi"
+                aria-label="Cari kecamatan/kabupaten/provinsi"
+                :get-result-value="getResultValue"
+                v-validate="'required'"
+                auto-select
+              ></autocomplete>
+              <!-- <div
+                v-if="submitted && errors.has('district')"
+                class="alert-danger"
+              >{{ errors.first('district')}}
+              </div> -->
+            </div>
+
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label>Create password</label>
@@ -63,6 +96,7 @@
                   class="form-control"
                   type="password"
                   name="password"
+                  ref="password"
                 />
                 <div
                   v-if="submitted && errors.has('password')"
@@ -72,17 +106,21 @@
               <!-- form-group end.// -->
               <div class="form-group col-md-6">
                 <label>Repeat password</label>
-                <input class="form-control" type="password" />
+                <input class="form-control" v-validate="'required|confirmed:password'" name="password_confirmation" type="password" placeholder="Password, Again" data-vv-as="password" />
               </div>
+              <div
+                  v-if="submitted && errors.has('password_confirmation')"
+                  class="alert-danger"
+                >{{errors.first('password_confirmation')}}</div>
               <!-- form-group end.// -->
             </div>
             <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block">Register</button>
+              <button id="btn" type="submit" class="btn btn-primary btn-block">Register</button>
             </div>
             <!-- form-group// -->
             <div class="form-group">
               <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" checked />
+                <input type="checkbox" class="custom-control-input" id="chk" @click="checkTac()"/>
                 <div class="custom-control-label">
                   I am agree with
                   <a href="#">terms and contitions</a>
@@ -114,16 +152,22 @@
 
 <script>
 import User from "../models/user";
+// import AddressDataService from "../services/AddressDataService";
+import Autocomplete from '@trevoreyre/autocomplete-vue'
 
 export default {
   name: "Register",
   data() {
     return {
-      user: new User("", "", "",""),
+      user: new User("", "", "","", "", ""),
+      district: '',
       submitted: false,
       successful: false,
-      message: ""
+      message: ''
     };
+  },
+  components: {
+    Autocomplete
   },
   computed: {
     loggedIn() {
@@ -134,6 +178,7 @@ export default {
     if (this.loggedIn) {
       this.$router.push("/profile");
     }
+    this.checkTac();
   },
   methods: {
     handleRegister() {
@@ -141,6 +186,7 @@ export default {
       this.submitted = true;
       this.$validator.validate().then(isValid => {
         if (isValid) {
+          this.user.district_id = this.district.replace(/[^0-9]/g,'');
           this.$store.dispatch("auth/register", this.user).then(
             data => {
               this.message = data.message;
@@ -156,6 +202,39 @@ export default {
           );
         }
       });
+    },
+    search(input){
+      const url = `${process.env.VUE_APP_URL_API}api/address/${encodeURI(input)}`
+      return new Promise(resolve => {
+        if (input.length < 3) {
+          return resolve([])
+        }
+
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            this.district = data.id_district;
+            // console.log(this.district);
+            resolve(data)
+          })
+      })
+    },
+   
+    // We want to display the value
+    getResultValue(result) {
+      this.district = result.address + ' '+ result.id_district;
+      return this.district;
+    },
+
+    checkTac(){
+      let check = $('#chk').is(":checked");
+      console.log(check);
+      if (!check){
+        $(':input[type="submit"]').prop('disabled', true);
+      }
+      else{
+        $(':input[type="submit"]').prop('disabled', false);
+      }
     }
   }
 };

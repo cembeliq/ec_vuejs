@@ -71,16 +71,16 @@
           <!-- <p>{{ product.desc }}</p> -->
           
 
-          <!-- <dl class="row">
-            <dt class="col-sm-3">Model#</dt>
-            <dd class="col-sm-9">Odsy-1000</dd>
+          <dl class="row">
+            <dt class="col-sm-3">Kondisi</dt>
+            <dd class="col-sm-9">Bekas</dd>
 
-            <dt class="col-sm-3">Color</dt>
-            <dd class="col-sm-9">Brown</dd>
+            <dt class="col-sm-3">Pengiriman dari</dt>
+            <dd class="col-sm-9">Sulang</dd>
 
-            <dt class="col-sm-3">Delivery</dt>
-            <dd class="col-sm-9">Russia, USA, and Europe</dd>
-          </dl> -->
+            <dt class="col-sm-3">Terima COD</dt>
+            <dd class="col-sm-9">Ya</dd>
+          </dl>
 
           <hr />
           <div class="form-row">
