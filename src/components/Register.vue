@@ -69,10 +69,10 @@
               >{{ errors.first('address')}}
               </div>
             </div>
-            <input type="hidden" v-model="user.district" class="form-control">
             <div class="form-group">
               <label>Kecamatan/kabupaten/provinsi</label>
               <autocomplete
+                id="ac"
                 :search="search"
                 placeholder="Cari kecamatan/kabupaten/provinsi"
                 aria-label="Cari kecamatan/kabupaten/provinsi"
@@ -160,7 +160,6 @@ export default {
   data() {
     return {
       user: new User("", "", "","", "", ""),
-      district: '',
       submitted: false,
       successful: false,
       message: ''
@@ -186,7 +185,8 @@ export default {
       this.submitted = true;
       this.$validator.validate().then(isValid => {
         if (isValid) {
-          this.user.district_id = this.district.replace(/[^0-9]/g,'');
+          let dataAc = $('#ac').val();
+          this.user.district_id = dataAc.replace(/[^0-9]/g,'');
           this.$store.dispatch("auth/register", this.user).then(
             data => {
               this.message = data.message;
@@ -213,8 +213,6 @@ export default {
         fetch(url)
           .then(response => response.json())
           .then(data => {
-            this.district = data.id_district;
-            // console.log(this.district);
             resolve(data)
           })
       })
@@ -222,13 +220,11 @@ export default {
    
     // We want to display the value
     getResultValue(result) {
-      this.district = result.address + ' '+ result.id_district;
-      return this.district;
+      return result.address + ' '+ result.id_district;
     },
 
     checkTac(){
       let check = $('#chk').is(":checked");
-      console.log(check);
       if (!check){
         $(':input[type="submit"]').prop('disabled', true);
       }
