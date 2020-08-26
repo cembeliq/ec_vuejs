@@ -45,7 +45,11 @@ export default {
   },
   methods: {
     getProduct(id) {
-      ProductDataService.get(id)
+      let baseId = id.split(process.env.VUE_APP_PREFIX_SLUG); //id.substring(id.indexOf("-") + 1);
+    
+      let x = Buffer.from(baseId[1], 'base64')
+      let realId = x.toString();
+      ProductDataService.get(realId)
         .then(response => {
           this.product = response.data;
           this.width = "width: " + (this.product.rating / 5) * 100 + "%";

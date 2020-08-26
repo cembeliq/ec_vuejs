@@ -73,13 +73,14 @@
 
           <dl class="row">
             <dt class="col-sm-3">Kondisi</dt>
-            <dd class="col-sm-9">Bekas</dd>
+            <dd v-if="product.is_second" class="col-sm-9">Bekas</dd>
+            <dd v-else class="col-sm-9">Baru</dd>
 
             <dt class="col-sm-3">Pengiriman dari</dt>
-            <dd class="col-sm-9">Sulang</dd>
+            <dd class="col-sm-9">{{ deliver }}</dd>
 
-            <dt class="col-sm-3">Terima COD</dt>
-            <dd class="col-sm-9">Ya</dd>
+            <!-- <dt class="col-sm-3">Terima COD</dt>
+            <dd class="col-sm-9">Ya</dd> -->
           </dl>
 
           <hr />
@@ -155,15 +156,19 @@ export default {
       urlshopee: "",
       width: "",
       counter: 1,
-      mainImage: null
+      mainImage: null,
+      deliver: ''
     };
   },
   methods: {
     getProduct(id) {
-      ProductDataService.get(id)
+      let baseId = id.split(process.env.VUE_APP_PREFIX_SLUG); //id.substring(id.indexOf("-") + 1);
+    
+      let x = Buffer.from(baseId[1], 'base64')
+      let realId = x.toString();
+      ProductDataService.get(realId)
         .then(response => {
           this.product = response.data;
-          console.log(response.data);
           this.width = "width: " + (this.product.rating / 5) * 100 + "%";
 
           let newTitle =
@@ -171,12 +176,11 @@ export default {
           if (document.title != newTitle) {
             document.title = newTitle;
           }
-   
 
+          this.deliver = this.product.users.districts.cities.name;
           let newDescription = this.product.desc;
           $('meta[name="description"]').attr("content", newDescription);
           let name = this.product.name;
-          console.log(name);
           let slug =
             name.replace(/ /g, "-").toLowerCase() +
             process.env.VUE_APP_PREFIX_SLUG +
@@ -191,7 +195,7 @@ export default {
             return `${process.env.VUE_APP_URL_API_IMAGE}${item.name}`;
           });
 
-          let content = `<a href=${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}><img src=${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name} /></a>`;
+          let content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}'><img src='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}' /></a>`;
           // alert(content);
           $('#main_image_id').html(content);
 
