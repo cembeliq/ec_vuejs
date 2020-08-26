@@ -84,6 +84,7 @@
           </dl>
 
           <hr />
+          <input type="hidden" id="p_id" :val="product.id" />
           <div class="form-row">
             <div class="form-group col-md">
               <label>Quantity {{ product.qty }}</label>
@@ -122,15 +123,35 @@
             <!-- col.// -->
           </div>
           <!-- row.// -->
+          <div v-if="!currentUser">
+          <router-link :to="{ name: 'signin', params: { id: 0 } }">
+            <button @click="createOrder" class="btn btn-primary">Beli <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+          </router-link>
+          &nbsp;
 
-          <a :href="urlshopee" class="btn btn-primary" target="_blank">Buy in shopee</a>
+          <!-- <a :href="urlshopee" class="btn btn-primary" target="_blank">Buy in shopee</a> -->
           <a :href="urlwa" class="btn btn-outline-primary" target="_blank">
             <span class="text">Chat WA</span>
             <i class="fa fa-whatsapp fa_custom_wa" aria-hidden="true"></i>
           </a>
-          <router-link :to="{ name: 'cart', params: { id: 0 } }">
-            <button class="btn btn-outline-warning">Buy <i class="fa fa-shopping-cart fa_custom_cart" aria-hidden="true"></i></button>
+          </div>
+          <div v-else>
+            <router-link :to="{ name: 'cart', params: { id: 0 } }">
+            <button @click="createOrder" class="btn btn-primary">Beli <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
           </router-link>
+          &nbsp;
+
+          <!-- <a :href="urlshopee" class="btn btn-primary" target="_blank">Buy in shopee</a> -->
+          <a :href="urlwa" class="btn btn-outline-primary" target="_blank">
+            <span class="text">Chat WA</span>
+            <i class="fa fa-whatsapp fa_custom_wa" aria-hidden="true"></i>
+          </a>
+          </div>
+          
+          
+          <!-- <router-link :to="{ name: 'cart', params: { id: 0 } }">
+            <button class="btn  btn-outline-primary">Buy <i class="fa fa-shopping-cart fa_custom_cart" aria-hidden="true"></i></button>
+          </router-link> -->
         </article>
         <!-- product-info-aside .// -->
       </main>
@@ -144,12 +165,15 @@
 </template>
 
 <script>
+import Order from "../models/order";
 import ProductDataService from "../services/ProductPopulerDataService";
+import OrderDataService from "../services/OrderDataService";
 
 export default {
   name: "detail-product",
   data() {
     return {
+      order: new Order("","",""),
       product: [],
       message: "",
       urlwa: "",
@@ -157,10 +181,31 @@ export default {
       width: "",
       counter: 1,
       mainImage: null,
-      deliver: ''
+      deliver: '',
+      productId: null
     };
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   methods: {
+    createOrder(){
+      // console.log(this.currentUser.id);
+      this.order.product_id = this.productId;
+      if (this.currentUser){
+        this.order.user_id = this.currentUser.id;
+      }
+      
+      let dataAc = $('#positive_number').val();
+      this.order.qty = dataAc;
+      OrderDataService.create(this.order)
+        .catch(e => {
+          console.log(e);
+          alert("silakan login terlebih dahulu");
+        })
+    },
     getProduct(id) {
       let baseId = id.split(process.env.VUE_APP_PREFIX_SLUG); //id.substring(id.indexOf("-") + 1);
     
@@ -170,7 +215,7 @@ export default {
         .then(response => {
           this.product = response.data;
           this.width = "width: " + (this.product.rating / 5) * 100 + "%";
-
+          this.productId = this.product.id;
           let newTitle =
             process.env.VUE_APP_PREFIX_META_TITLE + this.product.name;
           if (document.title != newTitle) {
@@ -233,3 +278,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+    .fa_custom_wa {  
+			color: #33FF74  
+		}  
+		.fa_custom_cart {  
+			color: #ffcc00  
+		}  
+</style>
