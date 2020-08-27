@@ -235,12 +235,20 @@ export default {
           this.urlshopee = "https://shopee.co.id/cembeliq86/" + slug;
 
           $('#desc').html(this.product.desc);
-          this.mainImage = `${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}`;
-          this.src = this.product.images.map(function(item){
-            return `${process.env.VUE_APP_URL_API_IMAGE}${item.name}`;
-          });
+          let content = '';
+          if (this.product.images.length > 0){
+            this.mainImage = `${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}`;
+            this.src = this.product.images.map(function(item){
+              return `${process.env.VUE_APP_URL_API_IMAGE}${item.name}`;
+            });
 
-          let content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}'><img src='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}' /></a>`;
+            content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}'><img src='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}' /></a>`;
+          }
+          else {
+            this.mainImage = process.env.VUE_APP_URL_API_IMAGE + 'default.png';
+            this.src = process.env.VUE_APP_URL_API_IMAGE + 'default.png';
+            content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}default.png'><img src='${process.env.VUE_APP_URL_API_IMAGE}default.png' /></a>`;
+          }
           // alert(content);
           $('#main_image_id').html(content);
 

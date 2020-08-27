@@ -71,7 +71,9 @@
 
     <p class="text-center mt-4">
       Don't have account?
-      <a href="/register">Sign up</a>
+      <router-link :to="{ name: 'register', params: 0 }">
+        Sign Up
+      </router-link>
     </p>
     <br />
     <br />

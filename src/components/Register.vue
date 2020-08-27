@@ -12,6 +12,7 @@
             <div class="form-group">
               <label>Username</label>
               <input
+                placeholder="Username"
                 v-model="user.username"
                 v-validate="'required|min:3|max:20'"
                 type="text"
@@ -26,6 +27,7 @@
             <div class="form-group">
               <label>Email</label>
               <input
+                placeholder="email@email.com"
                 v-model="user.email"
                 v-validate="'required|email|max:50'"
                 type="email"
@@ -42,6 +44,7 @@
             <div class="form-group">
               <label>No Handphone</label>
               <input
+                placeholder="08xxxxxxxxxx"
                 v-model="user.phone"
                 v-validate="'required|numeric|max:12'"
                 type="text"
@@ -57,6 +60,7 @@
             <div class="form-group">
               <label>Alamat</label>  
               <input
+                placeholder="Jl. Mawar No.8"
                 v-model="user.address"
                 v-validate="'required'"
                 type="text"
@@ -97,6 +101,7 @@
                   type="password"
                   name="password"
                   ref="password"
+                  placeholder="Password"
                 />
                 <div
                   v-if="submitted && errors.has('password')"
@@ -106,7 +111,7 @@
               <!-- form-group end.// -->
               <div class="form-group col-md-6">
                 <label>Repeat password</label>
-                <input class="form-control" v-validate="'required|confirmed:password'" name="password_confirmation" type="password" placeholder="Password, Again" data-vv-as="password" />
+                <input class="form-control" v-validate="'required|confirmed:password'" name="password_confirmation" type="password" placeholder="Ulangi password" data-vv-as="password"/>
               </div>
               <div
                   v-if="submitted && errors.has('password_confirmation')"
@@ -141,7 +146,9 @@
     <!-- card .// -->
     <p class="text-center mt-4">
       Have an account?
-      <a href="/signin">Log In</a>
+      <router-link :to="{ name: 'signin', params: 0 }">
+        Sign in
+      </router-link>
     </p>
     <br />
     <br />

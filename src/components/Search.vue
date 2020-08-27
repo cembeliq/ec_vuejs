@@ -57,12 +57,12 @@
         <div v-if="!currentUser" class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3">
-              <!-- <router-link :to="{ name: 'cart', params: null }">
+              <router-link :to="{ name: 'cart', params: 0 }">
                 <button class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></button>
-              </router-link> -->
-              <a href="cart" class="icon icon-sm rounded-circle border">
+              </router-link>
+              <!-- <a href="cart" class="icon icon-sm rounded-circle border">
                 <i class="fa fa-shopping-cart"></i>
-              </a>
+              </a> -->
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext">
@@ -74,18 +74,13 @@
                 <div>
                   <!-- <a href="#">Sign in</a> |
                   <a href="#">Register</a> -->
-                  <!-- <router-link :to="{ name: 'signin', params: null }">
+                  <router-link :to="{ name: 'signin', params: 0 }">
                     Sign in
                   </router-link> |
-                  <router-link :to="{ name: 'register', params: null }">
+                  <router-link :to="{ name: 'register', params: 0 }">
                     Register
-                  </router-link> -->
-                  <a href="/signin">
-                    Sign in
-                  </a> |
-                  <a href="/register">
-                    Register
-                  </a>
+                  </router-link>
+                  
                 </div>
               </div>
             </div>

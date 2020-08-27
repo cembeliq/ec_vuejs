@@ -98,7 +98,13 @@ export default {
             return `width: ${x}%`;
           });
           this.src = this.products.map(function (item) {
-            return process.env.VUE_APP_URL_API_IMAGE + item.images[0].name;
+            if (item.images.length > 0){
+              return process.env.VUE_APP_URL_API_IMAGE + item.images[0].name;
+            }
+            else {
+              return process.env.VUE_APP_URL_API_IMAGE + 'default.png';
+            }
+            
           });
           this.slug = this.products.map(function (item) {
             let text = item.name;
