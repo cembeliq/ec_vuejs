@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    
-    <Cart />
-  
+    <Checkout />
   </div>
 </template>
 
 <script>
-import Cart from "../components/Cart.vue";
+import Checkout from "../components/Checkout.vue";
 
 export default {
   name: "app",
   components: {
-    Cart,
+    Checkout,
   }
 };
 </script>

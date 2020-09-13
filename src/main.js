@@ -17,6 +17,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Default from "./layouts/Default";
 import NoHeader from "./layouts/NoHeader";
+import VueRouter from "vue-router";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -24,6 +25,8 @@ Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('default-layout', Default);
 Vue.component('no-header-layout', NoHeader);
+Vue.use(VueRouter);
+
 
 // Install BootstrapVue
 Vue.use(BootstrapVue)

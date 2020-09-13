@@ -5,49 +5,81 @@
 
       <div class="row">
         <aside class="col-lg-9">
-          <div class="card">
+          <div class="card table-responsive">
             <table class="table table-borderless table-shopping-cart">
               <thead class="text-muted">
                 <tr class="small text-uppercase">
                   <th scope="col">Product</th>
-                  <th scope="col" width="120">Quantity</th>
+                  <th scope="col" width="200">Quantity</th>
                   <th scope="col" width="120">Price</th>
                   <th scope="col" class="text-right" width="200"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="(order,index) in orders" :key="order.id">
                   <td>
                     <figure class="itemside align-items-center">
                       <div class="aside">
                         <img src="images/items/1.jpg" class="img-sm" />
                       </div>
                       <figcaption class="info">
-                        <a href="#" class="title text-dark">Camera Canon EOS M50 Kit</a>
-                        <p class="text-muted small">
-                          Matrix: 25 Mpx
-                          <br />Brand: Canon
+                        <a href="#" class="title text-dark">{{order.product.name}}</a>
+                        <p class="text-muted small" v-if="order.product.is_second == 0">
+                          Produk: Baru
+                          <br />Pengiriman dari: {{order.user.districts.cities.name}}
+                        </p>
+                        <p class="text-muted small" v-else>
+                          Produk: Bekas
+                          <br />Pengiriman dari: {{order.user.districts.cities.name}}
                         </p>
                       </figcaption>
                     </figure>
                   </td>
                   <td>
-                    <select class="form-control">
+                    <div class="input-group mb-3 input-spinner">
+                      <div class="input-group-prepend">
+                        <button
+                          v-on:click="counterQtyPlus(order.product.qty, order.id, order.product.price)"
+                          class="btn btn-light"
+                          type="button"
+                          id="btn_plus"
+                        >+</button>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        :id="positive_numberx[index]"
+                        v-model=order.qty
+                        min="0"
+                        max="1"
+                        
+                      />
+                      <div class="input-group-append">
+                        <button
+                          v-on:click="counterQtyMin(1, order.id, order.product.price)"
+                          class="btn btn-light"
+                          type="button"
+                          id="btn_minus"
+                        >&minus;</button>
+                      </div>
+                      <!-- <span class="text">Tersisa </span> -->
+                    </div>
+                    <!-- <select class="form-control" v-if="order.product.qty">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
                       <option>4</option>
-                    </select>
+                    </select> -->
                   </td>
                   <td>
                     <div class="price-wrap">
-                      <var class="price">$1156.00</var>
-                      <small class="text-muted">$315.20 each</small>
+                      <var class="price" :id="price_numberx[index]" name="price2">{{formatPrice(order.product.price*order.qty)}}</var>
+                      <small class="text-muted">{{formatPrice(order.product.price)}} per item</small>
                     </div>
                     <!-- price-wrap .// -->
                   </td>
                   <td class="text-right">
-                    <a
+                    <!-- <a
                       data-original-title="Save to Wishlist"
                       title
                       href
@@ -55,95 +87,13 @@
                       data-toggle="tooltip"
                     >
                       <i class="fa fa-heart"></i>
-                    </a>
-                    <a href class="btn btn-light">Remove</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <figure class="itemside align-items-center">
-                      <div class="aside">
-                        <img src="images/items/2.jpg" class="img-sm" />
-                      </div>
-                      <figcaption class="info">
-                        <a href="#" class="title text-dark">ADATA Premier ONE microSDXC</a>
-                        <p class="text-muted small">
-                          Size: 256 GB
-                          <br />Brand: ADATA
-                        </p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <select class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price">$149.97</var>
-                      <small class="text-muted">$75.00 each</small>
+                    </a> -->
+                    <div class="col-md-2">
+                    <button @click="deleteItem(order.id)" class="btn btn-light">Remove</button>
                     </div>
-                    <!-- price-wrap .// -->
-                  </td>
-                  <td class="text-right">
-                    <a
-                      data-original-title="Save to Wishlist"
-                      title
-                      href
-                      class="btn btn-light"
-                      data-toggle="tooltip"
-                    >
-                      <i class="fa fa-heart"></i>
-                    </a>
-                    <a href class="btn btn-light btn-round">Remove</a>
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    <figure class="itemside align-items-center">
-                      <div class="aside">
-                        <img src="images/items/3.jpg" class="img-sm" />
-                      </div>
-                      <figcaption class="info">
-                        <a href="#" class="title text-dark">Gamepad Sony DualShock 4</a>
-                        <p class="small text-muted">
-                          Version: CUH-ZCT2E
-                          <br />Brand: Sony
-                        </p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <select class="form-control">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                    </select>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price">$98.00</var>
-                      <small class="text-muted">$578.00 each</small>
-                    </div>
-                    <!-- price-wrap .// -->
-                  </td>
-                  <td class="text-right">
-                    <a
-                      data-original-title="Save to Wishlist"
-                      title
-                      href
-                      class="btn btn-light"
-                      data-toggle="tooltip"
-                    >
-                      <i class="fa fa-heart"></i>
-                    </a>
-                    <a href class="btn btn-light btn-round">Remove</a>
-                  </td>
-                </tr>
+                
               </tbody>
             </table>
 
@@ -180,23 +130,23 @@
             <div class="card-body">
               <dl class="dlist-align">
                 <dt>Total price:</dt>
-                <dd class="text-right">$69.97</dd>
+                <dd class="text-right" id="totalPrice">{{formatPrice(total())}}</dd>
               </dl>
               <dl class="dlist-align">
                 <dt>Discount:</dt>
-                <dd class="text-right text-danger">- $10.00</dd>
+                <dd class="text-right text-danger">- {{formatPrice(0)}}</dd>
               </dl>
               <dl class="dlist-align">
                 <dt>Total:</dt>
                 <dd class="text-right text-dark b">
-                  <strong>$59.97</strong>
+                  <strong id="totalPriceNett">{{formatPrice(total())}}</strong>
                 </dd>
               </dl>
               <hr />
               <p class="text-center mb-3">
                 <img src="images/misc/payments.png" height="26" />
               </p>
-              <a href="#" class="btn btn-primary btn-block">Make Purchase</a>
+              <button @click="purchase()" class="btn btn-primary btn-block">Make Purchase</button>
               <a href="#" class="btn btn-light btn-block">Continue Shopping</a>
             </div>
             <!-- card-body.// -->
@@ -210,115 +160,7 @@
 
       <br />
 
-      <div class="row">
-        <aside class="col-md-9">
-          <!-- ============================ COMPONENT 3  ================================= -->
-
-          <div class="card mb-3">
-            <article class="card-body">
-              <header class="mb-4">
-                <h4 class="card-title">Review cart</h4>
-              </header>
-              <div class="row">
-                <div class="col-md-6">
-                  <figure class="itemside mb-3">
-                    <div class="aside">
-                      <img src="images/items/1.jpg" class="border img-xs" />
-                    </div>
-                    <figcaption class="info">
-                      <p>Name of the product goes here or title</p>
-                      <span>2x $290 = Total: $430</span>
-                    </figcaption>
-                  </figure>
-                </div>
-                <!-- col.// -->
-                <div class="col-md-6">
-                  <figure class="itemside mb-3">
-                    <div class="aside">
-                      <img src="images/items/2.jpg" class="border img-xs" />
-                    </div>
-                    <figcaption class="info">
-                      <p>Name of the product goes here or title</p>
-                      <span>2x $290 = Total: $430</span>
-                    </figcaption>
-                  </figure>
-                </div>
-                <!-- col.// -->
-                <div class="col-md-6">
-                  <figure class="itemside mb-3">
-                    <div class="aside">
-                      <img src="images/items/3.jpg" class="border img-xs" />
-                    </div>
-                    <figcaption class="info">
-                      <p>Name of the product goes here or title</p>
-                      <span>1x $290 = Total: $290</span>
-                    </figcaption>
-                  </figure>
-                </div>
-                <!-- col.// -->
-                <div class="col-md-6">
-                  <figure class="itemside mb-3">
-                    <div class="aside">
-                      <img src="images/items/4.jpg" class="border img-xs" />
-                    </div>
-                    <figcaption class="info">
-                      <p>Name of the product goes here or title</p>
-                      <span>4x $290 = Total: $430</span>
-                    </figcaption>
-                  </figure>
-                </div>
-                <!-- col.// -->
-              </div>
-              <!-- row.// -->
-            </article>
-            <!-- card-body.// -->
-            <article class="card-body border-top">
-              <dl class="row">
-                <dt class="col-sm-10">
-                  Subtotal:
-                  <span class="float-right text-muted">2 items</span>
-                </dt>
-                <dd class="col-sm-2 text-right">
-                  <strong>$1,568</strong>
-                </dd>
-
-                <dt class="col-sm-10">
-                  Discount:
-                  <span class="float-right text-muted">10% offer</span>
-                </dt>
-                <dd class="col-sm-2 text-danger text-right">
-                  <strong>$29</strong>
-                </dd>
-
-                <dt class="col-sm-10">
-                  Delivery charge:
-                  <span class="float-right text-muted">Express delivery</span>
-                </dt>
-                <dd class="col-sm-2 text-right">
-                  <strong>$120</strong>
-                </dd>
-
-                <dt class="col-sm-10">
-                  Tax:
-                  <span class="float-right text-muted">5%</span>
-                </dt>
-                <dd class="col-sm-2 text-right text-success">
-                  <strong>$7</strong>
-                </dd>
-
-                <dt class="col-sm-10">Total:</dt>
-                <dd class="col-sm-2 text-right">
-                  <strong class="h5 text-dark">$1,650</strong>
-                </dd>
-              </dl>
-            </article>
-            <!-- card-body.// -->
-          </div>
-          <!-- card.// -->
-          <!-- ============================ COMPONENT 3  ================================= -->
-        </aside>
-        <!-- col.// -->
-      </div>
+      
       <!-- row.// -->
     </div>
     <!-- container .//  -->
@@ -327,84 +169,170 @@
 </template>
 
 <script>
-// import ProductDataService from "../../services/ProductPopulerDataService";
+import OrderDataService from "../services/OrderDataService";
 
-// export default {
-//   name: "cart",
-//   data() {
-//     return {
-//       product: [],
-//       message: "",
-//       urlwa: "",
-//       urlshopee: "",
-//       width: "",
-//       counter: 1,
-//       mainImage: null
-//     };
-//   },
-//   methods: {
-//     getProduct(id) {
-//       ProductDataService.get(id)
-//         .then(response => {
-//           this.product = response.data;
-//           this.width = "width: " + (this.product.rating / 5) * 100 + "%";
+// var totalPrice = 0;
 
-//           let newTitle =
-//             process.env.VUE_APP_PREFIX_META_TITLE + this.product.name;
-//           if (document.title != newTitle) {
-//             document.title = newTitle;
-//           }
-
-//           let newDescription = this.product.desc;
-//           $('meta[name="description"]').attr("content", newDescription);
-//           let name = this.product.name;
-//           let slug =
-//             name.replace(/ /g, "-").toLowerCase() +
-//             process.env.VUE_APP_PREFIX_SLUG +
-//             btoa(this.product.id);
-//           this.urlwa =
-//             "https://api.whatsapp.com/send?phone=+628111070114&text=" + slug;
-//           this.urlshopee = "https://shopee.co.id/cembeliq86/" + slug;
-
-//           $("#desc").html(this.product.desc);
-//           this.mainImage = `images/items/${this.product.image}`;
-//           this.src = this.product.images.map(function(item) {
-//             return `images/items/${item.name}`;
-//           });
-
-//           let content = `<a href=images/items/${this.product.image}><img src=images/items/${this.product.image} /></a>`;
-//           // alert(content);
-//           $("#main_image_id").html(content);
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     },
-//     counterQtyPlus: function(qty) {
-//       if (this.counter >= qty) {
-//         $("#positive_number").val(qty);
-//       } else {
-//         this.counter += 1;
-//         $("#positive_number").val(this.counter);
-//       }
-//     },
-//     counterQtyMin: function(qty) {
-//       if (this.counter <= qty) {
-//         $("#positive_number").val("1");
-//       } else {
-//         this.counter -= 1;
-//         $("#positive_number").val(this.counter);
-//       }
-//     },
-//     imgToMain: function(img) {
-//       let content = `<a href=${img}><img src=${img} /></a>`;
-//       // alert(content);
-//       $("#main_image_id").html(content);
-//     }
-//   },
-//   mounted() {
-//     this.message = "";
-//     this.getProduct(this.$route.params.id);
-//   }
-// };
+export default {
+  name: "cart",
+  data() {
+    return {
+      orders: [],
+      // data: new Object(),//{ data: {user_id: this.$store.state.auth.user.id}},
+      message: "",
+      num: 0,
+      positive_numberx: 0,
+      price_numberx: 0,
+      // totalPrice: 0,
+      // urlwa: "",
+      // urlshopee: "",
+      // width: "",
+      // counter: 1,
+      // mainImage: null
+    };
+  },
+  methods: {
+    deleteItem(id) {
+      OrderDataService.delete(id)
+        .then(response => {
+          if (response.data){
+            window.location = "/cart";
+            // this.$router.push({ path: "/cart" });
+          }
+        })
+        .catch(e => {
+          console.log(e);
+          alert("Silakan login terlebih dahulu");
+          this.$router.push({ path: "/signin" });
+        });
+    },
+    getOrder() {
+      // this.data.id = this.$store.state.auth.user.id; 
+      // console.log(this.data); 
+      OrderDataService.get(this.$store.state.auth.user.id)
+        .then(response => {
+          this.orders = response.data;
+          this.positive_numberx = this.orders.map(item =>{
+            return `positive_number_${item.id}`;
+          });
+          this.price_numberx = this.orders.map(item =>{
+            return `txt_price_${item.id}`;
+          })
+          // this.num = this.orders.map(function (item) {
+            
+          //   let content = `<input type="number" name="num[]" value="${item.qty}" />`
+          //   console.log(content);
+          //   $('#sum').html(content);
+          // });
+         
+        })
+        .catch(e => {
+          console.log(e);
+          alert("Silakan login terlebih dahulu");
+          this.$router.push({ path: "/signin" });
+        });
+    },
+    counterQtyPlus: function(qty, index, currPrice) {
+      let counter = parseInt($(`#positive_number_${index}`).val());
+      var price = 0;
+      if (counter >= qty) {
+        price = currPrice*counter;
+        $(`#txt_price_${index}`).html(`<var class="price" name="price">${this.formatPrice(price)}</var>`);
+        $(`#positive_number_${index}`).val(qty);
+        // $('#totalPrice').html(`<dd class="text-right">${this.formatPrice(price)}</dd>`);
+        // totalPrice = price;
+      } else {
+        counter += 1;
+        price = currPrice*counter;
+        $(`#txt_price_${index}`).html(`<var class="price" name="price">${this.formatPrice(price)}</var>`);
+        $(`#positive_number_${index}`).val(counter);
+        // $('#totalPrice').html(`<dd class="text-right">${this.formatPrice(price)}</dd>`);
+        // totalPrice += currPrice;
+        
+      }
+      
+      this.totalPrice();
+      this.totalPriceNett();
+      
+    },
+    counterQtyMin: function(qty, index, currPrice) {
+      let counter = parseInt($(`#positive_number_${index}`).val());
+      
+      if (counter <= qty) {
+        $(`#positive_number_${index}`).val("1");
+        let price = currPrice*counter;
+        $(`#txt_price_${index}`).html(`<var class="price" name="price">${this.formatPrice(price)}</var>`);
+      } else {
+        counter -= 1;
+        $(`#positive_number_${index}`).val(counter);
+        let price = currPrice*counter;
+        $(`#txt_price_${index}`).html(`<var class="price" name="price">${this.formatPrice(price)}</var>`);
+      }
+      this.totalPrice();
+      this.totalPriceNett();
+      
+    },
+    total: function() {
+      let total = [];
+      Object.entries(this.orders).forEach(([, val]) => {
+        total.push(val.product.price*val.qty)
+      });
+      return total.reduce(function(total, num){ return total+num },0);
+    },
+    totalPrice: function(){
+      // console.log($('.price'));
+      var tot = 0;
+      let x;
+      $('[name="price2"]').each(function (){
+        x = parseInt($(this).text().replace(/\D/g,''));
+        // console.log(x);
+        tot+=x;
+        // console.log(tot);
+      });
+      $('#totalPrice').html(`<dd class="text-right">${this.formatPrice(tot)}</dd>`);
+      // console.log(tot);
+    },
+    totalPriceNett: function(){
+      // console.log($('.price'));
+      var tot = 0;
+      let x;
+      $('[name="price2"]').each(function (){
+        x = parseInt($(this).text().replace(/\D/g,''));
+        // console.log(x);
+        tot+=x;
+        // console.log(tot);
+      });
+      $('#totalPriceNett').html(`<strong id="totalPriceNett">${this.formatPrice(tot)}</strong>`);
+      // console.log(tot);
+    },
+    purchase(){
+      var arr = [];
+      Object.entries(this.orders).forEach(([,val]) =>{
+        let qty = $(`#positive_number_${val.id}`).val();
+        arr.push({id: val.id, qty: parseInt(qty)})
+      })
+      // console.log(arr);
+      OrderDataService.update(arr)
+        .then(() => {
+          // console.log(res);
+          this.$router.push({ path: "/checkout" });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+    // imgToMain: function(img) {
+    //   let content = `<a href=${img}><img src=${img} /></a>`;
+    //   // alert(content);
+    //   $("#main_image_id").html(content);
+    // }
+  },
+  mounted() {
+    this.message = "";
+    this.getOrder();
+  }
+};
+$(function(){
+  
+})
 </script>

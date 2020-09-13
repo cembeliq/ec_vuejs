@@ -4,7 +4,10 @@
       <div class="container">
         <ul class="navbar-nav d-none d-md-flex mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/" >Home</a>
+            <router-link :to="{ name: 'home', params: 0 }">
+              <a class="nav-link" >Home</a>
+            </router-link>
+            
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Delivery</a>

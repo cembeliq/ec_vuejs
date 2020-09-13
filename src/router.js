@@ -25,21 +25,30 @@ let router = new Router({
             meta: { 
                 requiresAuth: true
             },
-            component: () => import("./components/Cart")
+            component: () => import("./pages/Cart")
+        },
+        {
+            path: "/checkout",
+            alias: "/checkout",
+            name: "checkout",
+            meta: { 
+                requiresAuth: true
+            },
+            component: () => import("./pages/Checkout")
         },
         {
             path: "/signin",
             alias: "/signin",
             name: "signin",
             meta: {layout: "no-header"},
-            component: () => import("./components/Signin")
+            component: () => import("./pages/Signin")
         },
         {
             path: "/register",
             alias: "/register",
             name: "register",
             meta: {layout: "no-header"},
-            component: () => import("./components/Register")
+            component: () => import("./pages/Register")
         },
         {
             path: "/category/:categoryName",

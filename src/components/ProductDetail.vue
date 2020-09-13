@@ -9,16 +9,12 @@
       <aside class="col-md-6">
         <article class="gallery-wrap">
           <div class="img-big-wrap">
-            <div id="main_image_id">
-              
-            </div>
+            <div id="main_image_id"></div>
           </div>
           <!-- slider-product.// -->
-          <div class="thumbs-wrap"  >
-            
-            <a href="#" class="item-thumb" v-for="(image, index) in product.images"
-            :key="image.id">
-              <img :src=src[index] :alt=image.alt @click="imgToMain(src[index])"/>
+          <div class="thumbs-wrap">
+            <a href="#" class="item-thumb" v-for="(image, index) in product.images" :key="image.id">
+              <img :src="src[index]" :alt="image.alt" @click="imgToMain(src[index])" />
             </a>
             <!-- <a href="#" class="item-thumb">
               <img src="images/items/2.jpg" />
@@ -28,7 +24,7 @@
             </a>
             <a href="#" class="item-thumb">
               <img src="images/items/4.jpg" />
-            </a> -->
+            </a>-->
           </div>
           <!-- slider-nav.// -->
         </article>
@@ -69,7 +65,6 @@
           <!-- price-detail-wrap .// -->
 
           <!-- <p>{{ product.desc }}</p> -->
-          
 
           <dl class="row">
             <dt class="col-sm-3">Kondisi</dt>
@@ -80,7 +75,7 @@
             <dd class="col-sm-9">{{ deliver }}</dd>
 
             <!-- <dt class="col-sm-3">Terima COD</dt>
-            <dd class="col-sm-9">Ya</dd> -->
+            <dd class="col-sm-9">Ya</dd>-->
           </dl>
 
           <hr />
@@ -90,12 +85,28 @@
               <label>Quantity {{ product.qty }}</label>
               <div class="input-group mb-3 input-spinner">
                 <div class="input-group-prepend">
-                  <button v-on:click="counterQtyPlus(product.qty)" class="btn btn-light" type="button" id="btn_plus">+</button>
+                  <button
+                    v-on:click="counterQtyPlus(product.qty)"
+                    class="btn btn-light"
+                    type="button"
+                    id="btn_plus"
+                  >+</button>
                 </div>
-                <input type="number" class="form-control" id="positive_number" value="1" min="0" max="1" />
+                <input
+                  type="number"
+                  class="form-control"
+                  id="positive_number"
+                  value="1"
+                  min="0"
+                  max="1"
+                />
                 <div class="input-group-append">
-                  <button v-on:click="counterQtyMin(1)" class="btn btn-light" type="button" id="btn_minus">&minus;</button>
-                  
+                  <button
+                    v-on:click="counterQtyMin(1)"
+                    class="btn btn-light"
+                    type="button"
+                    id="btn_minus"
+                  >&minus;</button>
                 </div>
                 <!-- <span class="text">Tersisa </span> -->
               </div>
@@ -123,35 +134,18 @@
             <!-- col.// -->
           </div>
           <!-- row.// -->
-          <div v-if="!currentUser">
-          <router-link :to="{ name: 'signin', params: { id: 0 } }">
-            <button @click="createOrder" class="btn btn-primary">Beli <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
-          </router-link>
-          &nbsp;
+          <div>
+            <button @click="createOrder" class="btn btn-primary">
+              Beli
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            </button>
 
-          <!-- <a :href="urlshopee" class="btn btn-primary" target="_blank">Buy in shopee</a> -->
-          <a :href="urlwa" class="btn btn-outline-primary" target="_blank">
-            <span class="text">Chat WA</span>
-            <i class="fa fa-whatsapp fa_custom_wa" aria-hidden="true"></i>
-          </a>
+            &nbsp;
+            <a :href="urlwa" class="btn btn-outline-primary" target="_blank">
+              <span class="text">Chat WA</span>
+              <i class="fa fa-whatsapp fa_custom_wa" aria-hidden="true"></i>
+            </a>
           </div>
-          <div v-else>
-            <router-link :to="{ name: 'cart', params: { id: 0 } }">
-            <button @click="createOrder" class="btn btn-primary">Beli <i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
-          </router-link>
-          &nbsp;
-
-          <!-- <a :href="urlshopee" class="btn btn-primary" target="_blank">Buy in shopee</a> -->
-          <a :href="urlwa" class="btn btn-outline-primary" target="_blank">
-            <span class="text">Chat WA</span>
-            <i class="fa fa-whatsapp fa_custom_wa" aria-hidden="true"></i>
-          </a>
-          </div>
-          
-          
-          <!-- <router-link :to="{ name: 'cart', params: { id: 0 } }">
-            <button class="btn  btn-outline-primary">Buy <i class="fa fa-shopping-cart fa_custom_cart" aria-hidden="true"></i></button>
-          </router-link> -->
         </article>
         <!-- product-info-aside .// -->
       </main>
@@ -161,7 +155,6 @@
   </div>
   <!-- card.// -->
   <!-- ============================ COMPONENT 1 END .// ================================= -->
-  
 </template>
 
 <script>
@@ -173,7 +166,7 @@ export default {
   name: "detail-product",
   data() {
     return {
-      order: new Order("","",""),
+      order: new Order("", "", ""),
       product: [],
       message: "",
       urlwa: "",
@@ -181,8 +174,8 @@ export default {
       width: "",
       counter: 1,
       mainImage: null,
-      deliver: '',
-      productId: null
+      deliver: "",
+      productId: null,
     };
   },
   computed: {
@@ -191,28 +184,42 @@ export default {
     },
   },
   methods: {
-    createOrder(){
-      // console.log(this.currentUser.id);
+    createOrder() {
       this.order.product_id = this.productId;
-      if (this.currentUser){
+      if (this.currentUser) {
         this.order.user_id = this.currentUser.id;
       }
-      
-      let dataAc = $('#positive_number').val();
+
+      let dataAc = $("#positive_number").val();
       this.order.qty = dataAc;
       OrderDataService.create(this.order)
-        .catch(e => {
-          console.log(e);
-          alert("silakan login terlebih dahulu");
+        .then((data) =>{
+          console.log(data.data.data);
+          if (data.data.status == '1'){
+            this.$router.push( {path: '/cart'} );
+          }
+          
         })
+        .catch((e) => {
+        console.log(e);
+        // console.log(this.currentUser);
+        if (!this.currentUser) {
+          localStorage.removeItem("user");
+          localStorage.clear();
+
+
+          alert("Silakan login terlebih dahulu");
+          this.$router.push({ path: "/signin" });
+        }
+      });
     },
     getProduct(id) {
       let baseId = id.split(process.env.VUE_APP_PREFIX_SLUG); //id.substring(id.indexOf("-") + 1);
-    
-      let x = Buffer.from(baseId[1], 'base64')
+
+      let x = Buffer.from(baseId[1], "base64");
       let realId = x.toString();
       ProductDataService.get(realId)
-        .then(response => {
+        .then((response) => {
           this.product = response.data;
           this.width = "width: " + (this.product.rating / 5) * 100 + "%";
           this.productId = this.product.id;
@@ -231,67 +238,69 @@ export default {
             process.env.VUE_APP_PREFIX_SLUG +
             btoa(this.product.id);
           this.urlwa =
-            "https://api.whatsapp.com/send?phone=+628111070114&text="+ process.env.VUE_APP_GREETING +" http://"+ window.location.host + "/" + slug;
+            "https://api.whatsapp.com/send?phone=+628111070114&text=" +
+            process.env.VUE_APP_GREETING +
+            " http://" +
+            window.location.host +
+            "/" +
+            slug;
           this.urlshopee = "https://shopee.co.id/cembeliq86/" + slug;
 
-          $('#desc').html(this.product.desc);
-          let content = '';
-          if (this.product.images.length > 0){
+          $("#desc").html(this.product.desc);
+          let content = "";
+          if (this.product.images.length > 0) {
             this.mainImage = `${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}`;
-            this.src = this.product.images.map(function(item){
+            this.src = this.product.images.map(function (item) {
               return `${process.env.VUE_APP_URL_API_IMAGE}${item.name}`;
             });
 
             content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}'><img src='${process.env.VUE_APP_URL_API_IMAGE}${this.product.images[0].name}' /></a>`;
-          }
-          else {
-            this.mainImage = process.env.VUE_APP_URL_API_IMAGE + 'default.png';
-            this.src = process.env.VUE_APP_URL_API_IMAGE + 'default.png';
+          } else {
+            this.mainImage = process.env.VUE_APP_URL_API_IMAGE + "default.png";
+            this.src = process.env.VUE_APP_URL_API_IMAGE + "default.png";
             content = `<a href='${process.env.VUE_APP_URL_API_IMAGE}default.png'><img src='${process.env.VUE_APP_URL_API_IMAGE}default.png' /></a>`;
           }
           // alert(content);
-          $('#main_image_id').html(content);
-
+          $("#main_image_id").html(content);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    counterQtyPlus: function(qty){
-      if (this.counter >= qty){
+    counterQtyPlus: function (qty) {
+      if (this.counter >= qty) {
         $("#positive_number").val(qty);
-      } else{
+      } else {
         this.counter += 1;
         $("#positive_number").val(this.counter);
       }
     },
-    counterQtyMin: function(qty){
-      if (this.counter <= qty){
+    counterQtyMin: function (qty) {
+      if (this.counter <= qty) {
         $("#positive_number").val("1");
-      } else{
+      } else {
         this.counter -= 1;
         $("#positive_number").val(this.counter);
       }
     },
-    imgToMain: function(img){
+    imgToMain: function (img) {
       let content = `<a href=${img}><img src=${img} /></a>`;
       // alert(content);
-      $('#main_image_id').html(content);
-    }
+      $("#main_image_id").html(content);
+    },
   },
   mounted() {
     this.message = "";
     this.getProduct(this.$route.params.id);
-
-  }
+  },
 };
 </script>
 
 <style scoped>
-    .fa_custom_wa {  
-			color: #33FF74  
-		}  
-		.fa_custom_cart {  
-			color: #ffcc00  
-		}  
+.fa_custom_wa {
+  color: #33ff74;
+}
+.fa_custom_cart {
+  color: #ffcc00;
+}
 </style>

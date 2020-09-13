@@ -3,9 +3,12 @@
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-2 col-6">
-          <a href="/" >
+          <!-- <a href="/" >
             <img src="../assets/logo.png" style="width:150px"/>
-          </a>
+          </a> -->
+          <router-link :to="{ name: 'home', params: 0 }">
+            <img src="../assets/logo.png" style="width:150px"/>
+          </router-link>
           <!-- brand-wrap.// -->
         </div>
         <div class="col-lg-6 col-12 col-sm-12">
@@ -25,12 +28,12 @@
         <div v-if="currentUser" class="col-lg-4 col-sm-6 col-12">
           <div class="widgets-wrap float-md-right">
             <div class="widget-header mr-3">
-              <!-- <router-link :to="{ name: 'cart', params: null }">
+              <router-link :to="{ name: 'cart', params: 0 }">
                 <button class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></button>
-              </router-link> -->
-              <a href="cart" class="icon icon-sm rounded-circle border">
+              </router-link>
+              <!-- <a href="cart" class="icon icon-sm rounded-circle border">
                 <i class="fa fa-shopping-cart"></i>
-              </a>
+              </a> -->
               <span class="badge badge-pill badge-danger notify">0</span>
             </div>
             <div class="widget-header icontext">

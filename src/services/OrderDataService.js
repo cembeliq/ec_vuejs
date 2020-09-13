@@ -1,9 +1,9 @@
 import http from "../http-common";
 
 class OrderDataService{
-    getAll(){
-        return http.get("/order");
-    }
+    // getAll(id){
+    //     return http.get("/order", id);
+    // }
 
     get(id){
         return http.get(`/order/${id}`);
@@ -13,21 +13,21 @@ class OrderDataService{
         return http.post('/order', data);
     }
 
-    update(id, data){
-        return http.put(`/order/${id}`, data);
+    update(data){
+        return http.put('/order', data);
     }
 
     delete(id){
         return http.delete(`/order/${id}`);
     }
 
-    deleteAll(){
-        return http.delete('/order');
-    }
+    // deleteAll(){
+    //     return http.delete('/order');
+    // }
 
-    findByTitle(title){
-        return http.get(`/order?title=${title}`);
-    }
+    // findByTitle(title){
+    //     return http.get(`/order?title=${title}`);
+    // }
 }
 
 export default new OrderDataService();
