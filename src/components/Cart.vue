@@ -16,21 +16,21 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(order,index) in orders" :key="order.id">
+                <tr v-for="(cart,index) in carts" :key="cart.id">
                   <td>
                     <figure class="itemside align-items-center">
                       <div class="aside">
                         <img src="images/items/1.jpg" class="img-sm" />
                       </div>
                       <figcaption class="info">
-                        <a href="#" class="title text-dark">{{order.product.name}}</a>
-                        <p class="text-muted small" v-if="order.product.is_second == 0">
+                        <a href="#" class="title text-dark">{{cart.product.name}}</a>
+                        <p class="text-muted small" v-if="cart.product.is_second == 0">
                           Produk: Baru
-                          <br />Pengiriman dari: {{order.user.districts.cities.name}}
+                          <br />Pengiriman dari: {{cart.user.districts.cities.name}}
                         </p>
                         <p class="text-muted small" v-else>
                           Produk: Bekas
-                          <br />Pengiriman dari: {{order.user.districts.cities.name}}
+                          <br />Pengiriman dari: {{cart.user.districts.cities.name}}
                         </p>
                       </figcaption>
                     </figure>
@@ -39,7 +39,7 @@
                     <div class="input-group mb-3 input-spinner">
                       <div class="input-group-prepend">
                         <button
-                          v-on:click="counterQtyPlus(order.product.qty, order.id, order.product.price)"
+                          v-on:click="counterQtyPlus(cart.product.qty, cart.id, cart.product.price)"
                           class="btn btn-light"
                           type="button"
                           id="btn_plus"
@@ -49,14 +49,14 @@
                         type="number"
                         class="form-control"
                         :id="positive_numberx[index]"
-                        v-model=order.qty
+                        v-model=cart.qty
                         min="0"
                         max="1"
                         
                       />
                       <div class="input-group-append">
                         <button
-                          v-on:click="counterQtyMin(1, order.id, order.product.price)"
+                          v-on:click="counterQtyMin(1, cart.id, cart.product.price)"
                           class="btn btn-light"
                           type="button"
                           id="btn_minus"
@@ -64,7 +64,7 @@
                       </div>
                       <!-- <span class="text">Tersisa </span> -->
                     </div>
-                    <!-- <select class="form-control" v-if="order.product.qty">
+                    <!-- <select class="form-control" v-if="cart.product.qty">
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -73,8 +73,8 @@
                   </td>
                   <td>
                     <div class="price-wrap">
-                      <var class="price" :id="price_numberx[index]" name="price2">{{formatPrice(order.product.price*order.qty)}}</var>
-                      <small class="text-muted">{{formatPrice(order.product.price)}} per item</small>
+                      <var class="price" :id="price_numberx[index]" name="price2">{{formatPrice(cart.product.price*cart.qty)}}</var>
+                      <small class="text-muted">{{formatPrice(cart.product.price)}} per item</small>
                     </div>
                     <!-- price-wrap .// -->
                   </td>
@@ -89,7 +89,7 @@
                       <i class="fa fa-heart"></i>
                     </a> -->
                     <div class="col-md-2">
-                    <button @click="deleteItem(order.id)" class="btn btn-light">Remove</button>
+                    <button @click="deleteItem(cart.id)" class="btn btn-light">Remove</button>
                     </div>
                   </td>
                 </tr>
@@ -169,7 +169,7 @@
 </template>
 
 <script>
-import OrderDataService from "../services/OrderDataService";
+import CartDataService from "../services/CartDataService";
 
 // var totalPrice = 0;
 
@@ -177,7 +177,7 @@ export default {
   name: "cart",
   data() {
     return {
-      orders: [],
+      carts: [],
       // data: new Object(),//{ data: {user_id: this.$store.state.auth.user.id}},
       message: "",
       num: 0,
@@ -193,7 +193,7 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      OrderDataService.delete(id)
+      CartDataService.delete(id)
         .then(response => {
           if (response.data){
             window.location = "/cart";
@@ -202,23 +202,23 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          alert("Silakan login terlebih dahulu");
-          this.$router.push({ path: "/signin" });
+          // alert("Silakan login terlebih dahulu");
+          // this.$router.push({ path: "/signin" });
         });
     },
-    getOrder() {
+    getCart() {
       // this.data.id = this.$store.state.auth.user.id; 
       // console.log(this.data); 
-      OrderDataService.get(this.$store.state.auth.user.id)
+      CartDataService.get(this.$store.state.auth.user.id)
         .then(response => {
-          this.orders = response.data;
-          this.positive_numberx = this.orders.map(item =>{
+          this.carts = response.data;
+          this.positive_numberx = this.carts.map(item =>{
             return `positive_number_${item.id}`;
           });
-          this.price_numberx = this.orders.map(item =>{
+          this.price_numberx = this.carts.map(item =>{
             return `txt_price_${item.id}`;
           })
-          // this.num = this.orders.map(function (item) {
+          // this.num = this.carts.map(function (item) {
             
           //   let content = `<input type="number" name="num[]" value="${item.qty}" />`
           //   console.log(content);
@@ -228,8 +228,8 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          alert("Silakan login terlebih dahulu");
-          this.$router.push({ path: "/signin" });
+          // alert("Silakan login terlebih dahulu");
+          // this.$router.push({ path: "/signin" });
         });
     },
     counterQtyPlus: function(qty, index, currPrice) {
@@ -274,7 +274,7 @@ export default {
     },
     total: function() {
       let total = [];
-      Object.entries(this.orders).forEach(([, val]) => {
+      Object.entries(this.carts).forEach(([, val]) => {
         total.push(val.product.price*val.qty)
       });
       return total.reduce(function(total, num){ return total+num },0);
@@ -307,12 +307,12 @@ export default {
     },
     purchase(){
       var arr = [];
-      Object.entries(this.orders).forEach(([,val]) =>{
+      Object.entries(this.carts).forEach(([,val]) =>{
         let qty = $(`#positive_number_${val.id}`).val();
         arr.push({id: val.id, qty: parseInt(qty)})
       })
       // console.log(arr);
-      OrderDataService.update(arr)
+      CartDataService.update(arr)
         .then(() => {
           // console.log(res);
           this.$router.push({ path: "/checkout" });
@@ -329,7 +329,7 @@ export default {
   },
   mounted() {
     this.message = "";
-    this.getOrder();
+    this.getCart();
   }
 };
 $(function(){

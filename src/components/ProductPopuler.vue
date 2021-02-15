@@ -71,6 +71,7 @@
 
 <script>
 import ProductPopulerDataService from "../services/ProductPopulerDataService";
+// import UserDataService from "../services/UserDataService";
 
 export default {
   name: "populer-product",
@@ -82,9 +83,16 @@ export default {
       productDetail: null,
       src: null,
       empty: "",
+      // welcome: ""
     };
   },
   methods: {
+    // retrieveUser(){
+    //   UserDataService.get()
+    //     .then(res => {
+    //       this.welcome = res.data.message
+    //     })
+    // },
     retrieveProduct(categoryName) {
       ProductPopulerDataService.getAll(categoryName)
         .then((res) => {
@@ -126,6 +134,7 @@ export default {
   },
   mounted() {
     this.retrieveProduct(this.$route.params.categoryName);
+    // this.retrieveUser();
   },
 };
 </script>

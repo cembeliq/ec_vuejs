@@ -25,14 +25,14 @@
           </header>
           <div class="row">
             <!-- col.// -->
-            <div class="col-md-6" v-for="(order,index) in orders" :key="order.id">
+            <div class="col-md-6" v-for="(cart,index) in carts" :key="cart.id">
               <figure class="itemside mb-3">
                 <div class="aside">
                   <img :src="image[index]" class="border img-xs" />
                 </div>
                 <figcaption class="info">
-                  <p>{{order.product.name}}</p>
-                  <span>{{order.qty}} x {{formatPrice(order.product.price)}} = {{total[index]}}</span>
+                  <p>{{cart.product.name}}</p>
+                  <span>{{cart.qty}} x {{formatPrice(cart.product.price)}} = {{total[index]}}</span>
                 </figcaption>
               </figure>
             </div>
@@ -44,7 +44,7 @@
           <dl class="row">
             <dt class="col-sm-9">
               Subtotal:
-              <span class="float-right text-muted">{{orders.length}} items</span>
+              <span class="float-right text-muted">{{carts.length}} items</span>
             </dt>
             <dd class="col-sm-3 text-right">
               <strong>{{formatPrice(totalAll())}}</strong>
@@ -98,16 +98,19 @@
         </article>
       </div>-->
       <br />
-      <!-- <div>
-        <button @click="wa()" class="col-sm-12 btn btn-primary rounded-pill">Pilih Pembayaran</button>
-      </div>-->
+      <div>
+        <button @click="pay()" class="col-sm-12 btn btn-primary rounded-pill">Pilih Pembayaran</button>
+      </div>
+
+      <!-- modal -->
       <div>
         <b-button v-b-modal.my-modal class="col-sm-12 btn btn-primary rounded-pill">Pilih Pembayaran</b-button>
         <!-- The modal -->
         <b-modal id="my-modal" title="Pilih Pembayaran" hide-footer>
-          Hello From My Modal!
           <div>
-            <b-form-group label="Individual radios">
+            <a href="http://google.com">google</a>
+            <iframe style="width:100%" src="https://vuetifyjs.com"></iframe>
+            <!-- <b-form-group label="Individual radios">
               <b-form-radio v-model="selected" name="some-radios" value="A">Option A</b-form-radio>
               <b-form-radio v-model="selected" name="some-radios" value="B">Option B</b-form-radio>
             </b-form-group>
@@ -115,7 +118,7 @@
             <div class="mt-3">
               Selected:
               <strong>{{ selected }}</strong>
-            </div>
+            </div> -->
           </div>
         </b-modal>
       </div>
@@ -126,7 +129,8 @@
 
 <script>
 import UserProfileDataService from "../services/UserProfileDataService";
-import OrderDataService from "../services/OrderDataService";
+import CartDataService from "../services/CartDataService";
+import PaymentDataService from "../services/PaymentDataService";
 
 export default {
   name: "checkout",
@@ -134,7 +138,7 @@ export default {
     return {
       user: [],
       address: "",
-      orders: [],
+      carts: [],
       image: "",
       total: 0,
       selected: ''
@@ -147,6 +151,13 @@ export default {
   //   },
   // },
   methods: {
+    pay() {
+      PaymentDataService.pay()
+        .then(res => {
+          console.log(res.data);
+          window.location = res.data.redirect_url;
+        })
+    },
     getUser(id) {
       UserProfileDataService.get(id)
         .then((res) => {
@@ -164,14 +175,14 @@ export default {
           console.log(err);
         });
     },
-    getOrder(id) {
+    getCart(id) {
       // this.data.id = this.$store.state.auth.user.id;
       // console.log(this.data);
-      OrderDataService.get(id)
+      CartDataService.get(id)
         .then((response) => {
-          this.orders = response.data;
-          console.log(this.orders);
-          this.image = this.orders.map((item) => {
+          this.carts = response.data;
+          console.log(this.carts);
+          this.image = this.carts.map((item) => {
             if (item.product.images.length > 0) {
               return (
                 process.env.VUE_APP_URL_API_IMAGE + item.product.images[0].name
@@ -180,16 +191,16 @@ export default {
               return process.env.VUE_APP_URL_API_IMAGE + "default.png";
             }
           });
-          this.total = this.orders.map((item) => {
+          this.total = this.carts.map((item) => {
             return this.formatPrice(item.qty * item.product.price);
           });
-          // this.positive_numberx = this.orders.map((item) => {
+          // this.positive_numberx = this.carts.map((item) => {
           //   return `positive_number_${item.id}`;
           // });
-          // this.price_numberx = this.orders.map((item) => {
+          // this.price_numberx = this.carts.map((item) => {
           //   return `txt_price_${item.id}`;
           // });
-          // this.num = this.orders.map(function (item) {
+          // this.num = this.carts.map(function (item) {
 
           //   let content = `<input type="number" name="num[]" value="${item.qty}" />`
           //   console.log(content);
@@ -204,7 +215,7 @@ export default {
     },
     totalAll: function () {
       let total = [];
-      Object.entries(this.orders).forEach(([, val]) => {
+      Object.entries(this.carts).forEach(([, val]) => {
         total.push(val.product.price * val.qty);
       });
       return total.reduce(function (total, num) {
@@ -217,7 +228,7 @@ export default {
   },
   mounted() {
     this.getUser(this.$store.state.auth.user.id);
-    this.getOrder(this.$store.state.auth.user.id);
+    this.getCart(this.$store.state.auth.user.id);
   },
 };
 </script>

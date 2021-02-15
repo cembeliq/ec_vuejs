@@ -41,7 +41,7 @@
                 <i class="fa fa-user"></i>
               </a>
               <div class="text">
-                <span class="text-muted">Selamat datang! {{ currentUser.username }}</span>
+                <span class="text-muted">Selamat datang {{ currentUser.data.username }} !</span>
                 <div>
                   <!-- <a href="#">Sign in</a> |
                   <a href="#">Register</a> -->
@@ -130,7 +130,9 @@ export default {
   methods: {
     logOut() {
       this.$store.dispatch('auth/logout');
-      this.$router.push('/');
+      this.$router.push('/').catch(() => {});
+      this.$router.go()
+
     },
     onSearch(event){
       event.preventDefault();

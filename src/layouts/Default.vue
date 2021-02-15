@@ -2,7 +2,7 @@
   <div id="app">
     <Header />
     <Search />
-    <Category />
+    <!-- <Category /> -->
     <!-- <Banner /> -->
     <!-- <Feature /> -->
     <div class="product">
@@ -21,7 +21,7 @@
 <script>
 // import HelloWorld from './HelloWorld.vue'
 import Header from "../components/Header";
-import Category from "../components/Category.vue";
+// import Category from "../components/Category.vue";
 import Search from "../components/Search.vue";
 // import Banner from "./Banner.vue";
 // import Feature from "./Feature.vue";
@@ -35,7 +35,7 @@ import Footer from "../components/Footer.vue";
 export default {
   name: "app",
   components: {
-    Category,
+    // Category,
     // HelloWorld,
     Search,
     Header,

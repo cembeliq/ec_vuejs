@@ -1,5 +1,8 @@
 <template>
-  <!-- <div class="card">
+  <section class="section-name bg padding-y-sm">
+    <div class="container">
+      <div class="row">
+        <!-- <div class="card">
     <div class="row">
       <main class="col-md-12 border-left">
         <article class="content-body">
@@ -18,14 +21,23 @@
         </article>
       </main>
     </div>
-  </div> -->
-  <div>
-  <b-tabs content-class="ml-4 mt-3 mb-3" fill>
-    <b-tab title="Deskripsi" active><div id="desc"></div></b-tab>
-    <b-tab title="Ulasan"><p>Belum ada ulasan</p></b-tab>
-    <b-tab title="Pertanyaan"><p>Untuk pertanyaan silakan langsung chat via whatsapp</p></b-tab>
-  </b-tabs>
-  </div>
+        </div>-->
+        <div class="col-md-12 col-lg-12 col-xs-12">
+          <b-tabs content-class="ml-4 mt-3 mb-3" >
+            <b-tab title="Deskripsi" active>
+              <div id="desc"></div>
+            </b-tab>
+            <b-tab title="Ulasan">
+              <p>Belum ada ulasan</p>
+            </b-tab>
+            <b-tab title="Pertanyaan">
+              <p>Untuk pertanyaan silakan langsung chat via whatsapp</p>
+            </b-tab>
+          </b-tabs>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -40,17 +52,17 @@ export default {
       urlwa: "",
       urlshopee: "",
       width: "",
-      counter: 1
+      counter: 1,
     };
   },
   methods: {
     getProduct(id) {
       let baseId = id.split(process.env.VUE_APP_PREFIX_SLUG); //id.substring(id.indexOf("-") + 1);
-    
-      let x = Buffer.from(baseId[1], 'base64')
+
+      let x = Buffer.from(baseId[1], "base64");
       let realId = x.toString();
       ProductDataService.get(realId)
-        .then(response => {
+        .then((response) => {
           this.product = response.data;
           this.width = "width: " + (this.product.rating / 5) * 100 + "%";
 
@@ -73,11 +85,11 @@ export default {
 
           $("#desc").html(this.product.desc);
         })
-        .catch(e => {
+        .catch((e) => {
           console.log(e);
         });
     },
-    counterQtyPlus: function(qty) {
+    counterQtyPlus: function (qty) {
       if (this.counter >= qty) {
         $("#positive_number").val(qty);
       } else {
@@ -85,18 +97,18 @@ export default {
         $("#positive_number").val(this.counter);
       }
     },
-    counterQtyMin: function(qty) {
+    counterQtyMin: function (qty) {
       if (this.counter <= qty) {
         $("#positive_number").val("1");
       } else {
         this.counter -= 1;
         $("#positive_number").val(this.counter);
       }
-    }
+    },
   },
   mounted() {
     this.message = "";
     this.getProduct(this.$route.params.id);
-  }
+  },
 };
 </script>

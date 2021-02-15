@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist
+#/dist
 
 # local env files
 .env.local
@@ -25,3 +25,5 @@ pnpm-debug.log*
 package-lock.json
 src/http-common.js
 vue.config.js
+
+public/index.html

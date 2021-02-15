@@ -8,9 +8,18 @@ let router = new Router({
     routes: [
         {
             path: "/",
-            alias: "/",
+            // alias: "/",
             name: "home",
             component: require("./pages/Home").default
+        },
+        {
+            path: "/welcome",
+            // alias: "/welcome",
+            name: "welcome",
+            meta: { 
+                requiresAuth: true
+            },
+            component: () => import("./pages/Welcome")
         },
         {
             path: "/about-us",
@@ -20,7 +29,7 @@ let router = new Router({
         },
         {
             path: "/cart",
-            alias: "/cart",
+            // alias: "/cart",
             name: "cart",
             meta: { 
                 requiresAuth: true
@@ -29,7 +38,7 @@ let router = new Router({
         },
         {
             path: "/checkout",
-            alias: "/checkout",
+            // alias: "/checkout",
             name: "checkout",
             meta: { 
                 requiresAuth: true
@@ -38,14 +47,14 @@ let router = new Router({
         },
         {
             path: "/signin",
-            alias: "/signin",
+            // alias: "/signin",
             name: "signin",
             meta: {layout: "no-header"},
             component: () => import("./pages/Signin")
         },
         {
             path: "/register",
-            alias: "/register",
+            // alias: "/register",
             name: "register",
             meta: {layout: "no-header"},
             component: () => import("./pages/Register")

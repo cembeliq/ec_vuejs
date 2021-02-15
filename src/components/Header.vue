@@ -9,12 +9,7 @@
             </router-link>
             
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Delivery</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Payment</a>
-          </li>
+          
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">

@@ -1,8 +1,8 @@
 <template>
   <!-- ========================= SECTION CONTENT ========================= -->
-  <section class="section-conten padding-y" style="min-height:80vh">
+  <section class="section-conten padding-y" style="min-height: 80vh">
     <!-- ============================ COMPONENT LOGIN   ================================= -->
-    <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
+    <div class="card mx-auto" style="max-width: 380px; margin-top: 100px">
       <div class="card-body">
         <h4 class="card-title mb-4">Sign in</h4>
         <form name="form" @submit.prevent="handleLogin">
@@ -13,54 +13,63 @@
             <i class="fa fa-google"></i> &nbsp; Sign in with Google
           </a>
           <div class="form-group">
-            <input 
-              v-model="user.username"
-              v-validate="'required'" 
-              class="form-control" 
-              placeholder="Username" 
-              type="text" 
-              name="username"
+            <input
+              v-model="user.email"
+              v-validate="'required|email'"
+              class="form-control"
+              placeholder="Email"
+              type="text"
+              name="email"
             />
-            <div 
-              v-if="errors.has('username')"
+            <div
+              v-if="errors.has('email')"
               class="alert alert-danger"
               role="alert"
-            >Username is required!</div>
+            >
+              Email is required!
+            </div>
           </div>
           <!-- form-group// -->
           <div class="form-group">
-            <input 
+            <input
               v-model="user.password"
               v-validate="'required'"
-              class="form-control" 
-              placeholder="Password" 
-              type="password" 
+              class="form-control"
+              placeholder="Password"
+              type="password"
               name="password"
             />
             <div
               v-if="errors.has('password')"
               class="alert alert-danger"
               role="alert"
-            >Password is required!</div>
+            >
+              Password is required!
+            </div>
           </div>
           <!-- form-group// -->
 
           <div class="form-group">
             <a href="#" class="float-right">Forgot password?</a>
             <label class="float-left custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" checked />
+              <input type="checkbox" class="custom-control-input" />
               <div class="custom-control-label">Remember</div>
             </label>
           </div>
           <!-- form-group form-check .// -->
           <div class="form-group">
             <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
-          </button>
+              <span
+                v-show="loading"
+                class="spinner-border spinner-border-sm"
+              ></span>
+              <span>Login</span>
+            </button>
           </div>
           <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+            <div v-if="message" class="alert alert-danger" role="alert">
+              {{ message }}
+            </div>
           </div>
           <!-- form-group// -->
         </form>
@@ -71,9 +80,7 @@
 
     <p class="text-center mt-4">
       Don't have account?
-      <router-link :to="{ name: 'register', params: 0 }">
-        Sign Up
-      </router-link>
+      <router-link :to="{ name: 'register', params: 0 }"> Sign Up </router-link>
     </p>
     <br />
     <br />
@@ -101,7 +108,7 @@ export default {
   },
   created(){
     if (this.loggedIn){
-      this.$router.push('/');
+      this.$router.push('/').catch(() => {});
     }
   },
   methods: {
@@ -113,12 +120,20 @@ export default {
           return;
         }
 
-        if (this.user.username && this.user.password){
+        if (this.user.email && this.user.password){
           this.$store.dispatch('auth/login', this.user).then(
-            () => {
-              this.$router.push('/');
+            (res) => {
+              // console.log("Res signin: " + JSON.stringify(res))
+              if (res.data) {
+                this.$router.push('/').catch(() => {});
+                this.$router.go();
+              } else {
+                this.loading = false;
+                this.message = res.message;
+              }              
             },
             error => {
+              console.log("Error:" + error);
               this.loading = false;
               this.message = 
                 (error.response && error.response.data) || error.message || error.toString();
@@ -131,7 +146,7 @@ export default {
 };
 </script>
 <style scoped>
-  .btn-google {  
-			color: #33FF74  
-		}  
+.btn-google {
+  color: #33ff74;
+}
 </style>
