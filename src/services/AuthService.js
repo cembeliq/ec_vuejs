@@ -20,7 +20,7 @@ class AuthService{
     }
 
     register(user){
-        return http.post("/auth/signup", {
+        return http.post("/register", {
             username: user.username,
             email: user.email,
             phone: user.phone,
